@@ -1,0 +1,16 @@
+﻿<div class="row m-0">
+    <div class="col-md-12 p-2 border bg-light">
+        <button class="btn btn-primary" disabled="@(ViewModel.LoadingStatus == LoadingStatus.Loading || ViewModel.LoadingStatus == LoadingStatus.Failed)" @onclick="@(() => NewRow())"><i class="far fa-plus me-3" />Add New Record</button>
+    </div>
+</div>
+
+@code
+{
+
+    [Parameter]
+    public ViewModelBase<ConfigurationBase, AdminAppState> ViewModel { get; set; }
+
+    [Parameter]
+    public Action NewRow { get; set; }
+
+}

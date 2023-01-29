@@ -1,0 +1,148 @@
+﻿@typeparam TItem where TItem: DbObservableObject, IIdentifiable<Guid>
+
+<GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
+<RadzenDataGrid @ref="gridInstance"
+                AllowFiltering="true"
+                AllowPaging="true"
+                AllowSorting="true"
+                Count="@ViewModel.ResultCount"
+                Data="@ViewModel.Entities"
+                EditMode="DataGridEditMode.Single"
+                IsLoading="ViewModel.LoadingStatus == LoadingStatus.Loading"
+                TItem="TItem"
+                SelectionMode="DataGridSelectionMode.Single"
+                Value="@SelectedItems"
+                RowUpdate="@OnCreateOrUpdateRow"
+                RowCreate="@OnCreateOrUpdateRow"
+                PageSize="@ViewModel.PageSize"
+                RowSelect="@(async item => await SetValue(item))"
+                RowDoubleClick="@(async item => await EditRow(item.Data))"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                Responsive="true"
+                Style="height: calc(100vh - 240px); overflow-y: scroll;">
+    <EmptyTemplate>
+        <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">
+            @(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")
+        </p>
+    </EmptyTemplate>
+    <Columns>
+
+        @Columns
+
+        <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
+            <Template Context="context">
+                <button class="btn btn-sm btn-primary" @onclick="@(() => EditRow(context))"><i class="far fa-edit" /></button>
+            </Template>
+            <EditTemplate Context="context">
+                <button class="btn btn-sm btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><i class="far fa-save" /></button>
+                <button class="btn btn-sm btn-danger" @onclick="@(async () => await CancelEdit(context))"><i class="far fa-window-close" /></button>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+            <Template Context="context">
+                <button class="btn btn-sm btn-danger" @onclick="@(() => DeleteRow(context))"><i class="far fa-trash-alt" /></button>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+@if (ShowFooter)
+{
+    <GridBottomRow ViewModel="@ViewModel" Load="@Reload" />
+}
+
+@code {
+
+    #region Private Members
+
+    private RadzenDataGrid<TItem> gridInstance;
+
+    #endregion
+
+    #region Public Properties
+
+    [Parameter]
+    public RenderFragment Columns { get; set; }
+
+    [Parameter]
+    public List<TItem> SelectedItems { get; set; }
+
+    [Parameter]
+    public bool ShowFooter { get; set; } = true;
+
+    [Parameter]
+    public AdminViewModelBase<TItem> ViewModel { get; set; }
+
+    [Parameter]
+    public TItem Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem> ValueChanged { get; set; }
+
+    #endregion
+
+    public async Task Refresh()
+    {
+        await gridInstance.Reload();
+    }
+
+    async Task SetValue(TItem value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    async Task NewRow()
+    {
+        var item = (TItem)Activator.CreateInstance(typeof(TItem));
+        await gridInstance.InsertRow(item);
+        await SetValue(item);
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+    async Task EditRow(TItem entity)
+    {
+        await SetValue(entity);
+        await gridInstance.EditRow(entity);
+    }
+
+    async Task UpdateRow(TItem entity)
+    {
+        await gridInstance.UpdateRow(entity);
+    }
+
+    async Task CancelEdit(TItem entity)
+    {
+        await SetValue(null);
+        gridInstance.CancelEditRow(entity);
+        await Reload();
+    }
+
+    async Task DeleteRow(TItem entity)
+    {
+        if (ViewModel.Entities.Contains(entity))
+        {
+            await ViewModel.Delete(entity);
+            await gridInstance.Reload();
+        }
+        else
+        {
+            gridInstance.CancelEditRow(entity);
+        }
+    }
+
+    async Task OnCreateOrUpdateRow(TItem entity)
+    {
+        await ViewModel.Save(entity);
+        //await SetValue(default);
+        await gridInstance.Reload();
+    }
+
+    public async Task Reload()
+    {
+        await ViewModel.Load(true);
+        await SetValue(default);
+        await gridInstance.Reload();
+    }
+
+}
