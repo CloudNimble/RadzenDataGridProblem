@@ -5,44 +5,44 @@
 
 <CloudNimbleGrid @ref="gridInstance" TItem="Company" ViewModel="@viewModel" @bind-Value="@viewModel.SelectedItem">
     <Columns>
-        <RadzenDataGridColumn TItem="Company" Property="@nameof(Company.Id)" Title="Id" Width="300px">
+        <RadzenGridColumn TItem="Company" Property="@nameof(Company.Id)" Title="Id" Width="300px">
             <EditTemplate Context="context">
                 <span class="ui-cell-data">@context.Id</span>
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
-        <RadzenDataGridColumn TItem="Company" Property="@nameof(Company.CompanyName)" Title="Company Name">
+        <RadzenGridColumn TItem="Company" Property="@nameof(Company.CompanyName)" Title="Company Name">
             <EditTemplate Context="context">
                 <RadzenTextBox @bind-Value="context.CompanyName" Style="width:100%" />
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
-        <RadzenDataGridColumn TItem="Company" Property="@nameof(Company.CorporationName)" Title="Corporation Name">
+        <RadzenGridColumn TItem="Company" Property="@nameof(Company.CorporationName)" Title="Corporation Name">
             <EditTemplate Context="context">
                 <RadzenTextBox @bind-Value="context.CorporationName" Style="width:100%" />
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
-        <RadzenDataGridColumn TItem="Company" Property="@nameof(Company.City)" Title="City">
+        <RadzenGridColumn TItem="Company" Property="@nameof(Company.City)" Title="City">
             <EditTemplate Context="context">
                 <RadzenTextBox @bind-Value="context.City" Style="width:100%" />
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
-        <RadzenDataGridColumn TItem="Company" Property="@nameof(Company.State)" Title="State" Width="80px">
+        <RadzenGridColumn TItem="Company" Property="@nameof(Company.State)" Title="State" Width="80px">
             <EditTemplate Context="context">
                 <RadzenTextBox @bind-Value="context.State" Style="width:100%" />
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
-        <RadzenDataGridColumn TItem="Company" Property="@nameof(Company.DateCreated)" Title="Date Created" TextAlign="TextAlign.Right" Width="120px">
+        <RadzenGridColumn TItem="Company" Property="@nameof(Company.DateCreated)" Title="Date Created" TextAlign="TextAlign.Right" Width="120px">
             <Template Context="context">
                 @String.Format("{0:d}", context.DateCreated)
             </Template>
             <EditTemplate Context="context">
                 <span class="ui-cell-data">@String.Format("{0:d}", context.DateCreated)</span>
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
     </Columns>
 </CloudNimbleGrid>
