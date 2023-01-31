@@ -1,14 +1,13 @@
 ﻿@typeparam TItem where TItem: DbObservableObject, IIdentifiable<Guid>
 
 <GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
-<RadzenDataGrid @ref="gridInstance"
+<RadzenGrid @ref="gridInstance"
                 AllowFiltering="true"
                 AllowPaging="true"
                 AllowSorting="true"
                 Count="@ViewModel.ResultCount"
                 Data="@ViewModel.Entities"
                 EditMode="DataGridEditMode.Single"
-                IsLoading="ViewModel.LoadingStatus == LoadingStatus.Loading"
                 TItem="TItem"
                 SelectionMode="DataGridSelectionMode.Single"
                 Value="@SelectedItems"
@@ -16,20 +15,20 @@
                 RowCreate="@OnCreateOrUpdateRow"
                 PageSize="@ViewModel.PageSize"
                 RowSelect="@(async item => await SetValue(item))"
-                RowDoubleClick="@(async item => await EditRow(item.Data))"
+                RowDoubleClick="@(async item => await EditRow(item))"
                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                 Responsive="true"
                 Style="height: calc(100vh - 240px); overflow-y: scroll;">
-    <EmptyTemplate>
+    @*<EmptyTemplate>
         <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">
             @(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")
         </p>
-    </EmptyTemplate>
+    </EmptyTemplate>*@
     <Columns>
 
         @Columns
 
-        <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
+        <RadzenGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
             <Template Context="context">
                 <button class="btn btn-sm btn-primary" @onclick="@(() => EditRow(context))"><i class="far fa-edit" /></button>
             </Template>
@@ -37,15 +36,15 @@
                 <button class="btn btn-sm btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><i class="far fa-save" /></button>
                 <button class="btn btn-sm btn-danger" @onclick="@(async () => await CancelEdit(context))"><i class="far fa-window-close" /></button>
             </EditTemplate>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
 
-        <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+        <RadzenGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
             <Template Context="context">
                 <button class="btn btn-sm btn-danger" @onclick="@(() => DeleteRow(context))"><i class="far fa-trash-alt" /></button>
             </Template>
-        </RadzenDataGridColumn>
+        </RadzenGridColumn>
     </Columns>
-</RadzenDataGrid>
+</RadzenGrid>
 @if (ShowFooter)
 {
     <GridBottomRow ViewModel="@ViewModel" Load="@Reload" />
@@ -55,7 +54,7 @@
 
     #region Private Members
 
-    private RadzenDataGrid<TItem> gridInstance;
+    private RadzenGrid<TItem> gridInstance;
 
     #endregion
 
