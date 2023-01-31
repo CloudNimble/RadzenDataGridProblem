@@ -1,4 +1,4 @@
-﻿@typeparam TItem where TItem: DbObservableObject, IIdentifiable<Guid>
+﻿@typeparam TItem
 
 <GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
 <RadzenGrid @ref="gridInstance"
@@ -96,7 +96,7 @@
         var item = (TItem)Activator.CreateInstance(typeof(TItem));
         await gridInstance.InsertRow(item);
         await SetValue(item);
-        _ = InvokeAsync(StateHasChanged);
+        await InvokeAsync(StateHasChanged);
     }
 
     async Task EditRow(TItem entity)
