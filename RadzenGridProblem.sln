@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33318.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadzenGridProblem.Server", "Server\RadzenGridProblem.Server.csproj", "{87E5AB56-38C8-4D1E-9B4A-2B1E60C4F41E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadzenGridProblem.Server", "Server\RadzenGridProblem.Server.csproj", "{87E5AB56-38C8-4D1E-9B4A-2B1E60C4F41E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadzenGridProblem.Client", "Client\RadzenGridProblem.Client.csproj", "{A9F4FDA6-B1FC-40CE-9974-50B56FAD2DE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadzenGridProblem.Client", "Client\RadzenGridProblem.Client.csproj", "{A9F4FDA6-B1FC-40CE-9974-50B56FAD2DE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadzenGridProblem.Shared", "Shared\RadzenGridProblem.Shared.csproj", "{92142779-72CA-4F21-858B-746B059FB638}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadzenGridProblem.Shared", "Shared\RadzenGridProblem.Shared.csproj", "{92142779-72CA-4F21-858B-746B059FB638}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4626C5F7-809B-4550-9385-205E693FA534}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

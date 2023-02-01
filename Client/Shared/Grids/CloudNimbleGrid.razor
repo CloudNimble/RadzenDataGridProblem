@@ -2,23 +2,23 @@
 
 <GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
 <RadzenGrid @ref="gridInstance"
-                AllowFiltering="true"
-                AllowPaging="true"
-                AllowSorting="true"
-                Count="@ViewModel.ResultCount"
-                Data="@ViewModel.Entities"
-                EditMode="DataGridEditMode.Single"
-                TItem="TItem"
-                SelectionMode="DataGridSelectionMode.Single"
-                Value="@SelectedItems"
-                RowUpdate="@OnCreateOrUpdateRow"
-                RowCreate="@OnCreateOrUpdateRow"
-                PageSize="@ViewModel.PageSize"
-                RowSelect="@(async item => await SetValue(item))"
-                RowDoubleClick="@(async item => await EditRow(item))"
-                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                Responsive="true"
-                Style="height: calc(100vh - 240px); overflow-y: scroll;">
+            AllowFiltering="true"
+            AllowPaging="true"
+            AllowSorting="true"
+            Count="@ViewModel.ResultCount"
+            Data="@ViewModel.Entities"
+            EditMode="DataGridEditMode.Single"
+            TItem="TItem"
+            SelectionMode="DataGridSelectionMode.Single"
+            Value="@SelectedItems"
+            RowUpdate="@OnCreateOrUpdateRow"
+            RowCreate="@OnCreateOrUpdateRow"
+            PageSize="@ViewModel.PageSize"
+            RowSelect="@(async item => await SetValue(item))"
+            RowDoubleClick="@(async item => await EditRow(item))"
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+            Responsive="true"
+            Style="height: calc(100vh - 240px); overflow-y: scroll;">
     @*<EmptyTemplate>
         <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">
             @(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")
@@ -94,8 +94,8 @@
     async Task NewRow()
     {
         var item = (TItem)Activator.CreateInstance(typeof(TItem));
-        await gridInstance.InsertRow(item);
-        await SetValue(item);
+        ViewModel.Entities.Insert(0, item);
+        await EditRow(item);
         _ = InvokeAsync(StateHasChanged);
     }
 
