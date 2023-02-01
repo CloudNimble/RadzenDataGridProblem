@@ -1,34 +1,35 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace RadzenGridProblem.Server
 {
-    app.UseWebAssemblyDebugging();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class Program
+    {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
 }
-else
-{
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseBlazorFrameworkFiles();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.MapRazorPages();
-app.MapControllers();
-app.MapFallbackToFile("index.html");
-
-app.Run();

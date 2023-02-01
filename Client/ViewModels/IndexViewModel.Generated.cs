@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using CloudNimble.EasyAF.Configuration;
+using CloudNimble.BlazorEssentials;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using RadzenGridProblem.Client.Models;

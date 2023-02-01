@@ -1,73 +1,51 @@
 ﻿@typeparam TItem
 
 <GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
-<RadzenGrid @ref="gridInstance"
-                AllowFiltering="true"
-                AllowPaging="true"
-                AllowSorting="true"
-                Count="@ViewModel.ResultCount"
-                Data="@ViewModel.Entities"
-                EditMode="DataGridEditMode.Single"
-                TItem="TItem"
-                SelectionMode="DataGridSelectionMode.Single"
-                Value="@SelectedItems"
-                RowUpdate="@OnCreateOrUpdateRow"
-                RowCreate="@OnCreateOrUpdateRow"
-                PageSize="@ViewModel.PageSize"
-                RowSelect="@(async item => await SetValue(item))"
-                RowDoubleClick="@(async item => await EditRow(item))"
-                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                Responsive="true"
-                Style="height: calc(100vh - 240px); overflow-y: scroll;">
-    @*<EmptyTemplate>
-        <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">
-            @(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")
-        </p>
-    </EmptyTemplate>*@
+<RadzenGrid @ref="gridInstance" 
+            AllowFiltering="true" 
+            AllowPaging="true" 
+            PageSize="@ViewModel.PageSize" 
+            AllowSorting="true" 
+            EditMode="DataGridEditMode.Single"
+            Data="@ViewModel.Entities" 
+            TItem="TItem" 
+            Value="@Value" 
+            RowUpdate="@OnCreateOrUpdateRow" 
+            RowCreate="@OnCreateOrUpdateRow"
+            RowSelect="@(async item => await SetValue(item))"
+            RowDoubleClick="@(item => EditRow(item))"
+            EmptyText="@(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")" 
+            Responsive="true" Style="height: calc(100vh - 260px); overflow-y: scroll;">
     <Columns>
 
         @Columns
 
-        <RadzenGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
+        <RadzenGridColumn TItem="TItem" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
             <Template Context="context">
-                <button class="btn btn-sm btn-primary" @onclick="@(() => EditRow(context))"><i class="far fa-edit" /></button>
+                <button class="btn btn-primary" @onclick="@(() => EditRow(context))"><iconify-icon data-icon="fa-regular:edit" data-height="16" style="color: #FFF;"></iconify-icon></button>
             </Template>
             <EditTemplate Context="context">
-                <button class="btn btn-sm btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><i class="far fa-save" /></button>
-                <button class="btn btn-sm btn-danger" @onclick="@(async () => await CancelEdit(context))"><i class="far fa-window-close" /></button>
+                <button class="btn btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><iconify-icon data-icon="fa-regular:save" data-height="16" style="color: #FFF;"></iconify-icon></button>
+                <button class="btn btn-danger" @onclick="@(async () => await CancelEdit(context))"><iconify-icon data-icon="fa-regular:window-close" data-height="16" style="color: #FFF;"></iconify-icon></button>
             </EditTemplate>
         </RadzenGridColumn>
 
-        <RadzenGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+        <RadzenGridColumn TItem="TItem" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
             <Template Context="context">
-                <button class="btn btn-sm btn-danger" @onclick="@(() => DeleteRow(context))"><i class="far fa-trash-alt" /></button>
+                <button class="btn btn-danger" @onclick="@(() => DeleteRow(context))"><iconify-icon data-icon="fa-regular:trash-alt" data-height="16" style="color: #FFF;"></iconify-icon></button>
             </Template>
         </RadzenGridColumn>
     </Columns>
 </RadzenGrid>
 @if (ShowFooter)
 {
-    <GridBottomRow ViewModel="@ViewModel" Load="@Reload" />
+    <GridBottomRow ViewModel="@ViewModel" Load="@ReloadGrid" />
 }
 
 @code {
 
-    #region Private Members
-
-    private RadzenGrid<TItem> gridInstance;
-
-    #endregion
-
-    #region Public Properties
-
     [Parameter]
     public RenderFragment Columns { get; set; }
-
-    [Parameter]
-    public List<TItem> SelectedItems { get; set; }
-
-    [Parameter]
-    public bool ShowFooter { get; set; } = true;
 
     [Parameter]
     public AdminViewModelBase<TItem> ViewModel { get; set; }
@@ -78,12 +56,10 @@
     [Parameter]
     public EventCallback<TItem> ValueChanged { get; set; }
 
-    #endregion
+    [Parameter]
+    public bool ShowFooter { get; set; } = true;
 
-    public async Task Refresh()
-    {
-        await gridInstance.Reload();
-    }
+    private RadzenGrid<TItem> gridInstance;
 
     async Task SetValue(TItem value)
     {
@@ -96,13 +72,12 @@
         var item = (TItem)Activator.CreateInstance(typeof(TItem));
         await gridInstance.InsertRow(item);
         await SetValue(item);
-        await InvokeAsync(StateHasChanged);
     }
 
-    async Task EditRow(TItem entity)
+    void EditRow(TItem entity)
     {
-        await SetValue(entity);
-        await gridInstance.EditRow(entity);
+        //Value = entity;
+        gridInstance.EditRow(entity);
     }
 
     async Task UpdateRow(TItem entity)
@@ -112,9 +87,8 @@
 
     async Task CancelEdit(TItem entity)
     {
-        await SetValue(null);
         gridInstance.CancelEditRow(entity);
-        await Reload();
+        await ReloadGrid();
     }
 
     async Task DeleteRow(TItem entity)
@@ -133,11 +107,11 @@
     async Task OnCreateOrUpdateRow(TItem entity)
     {
         await ViewModel.Save(entity);
-        //await SetValue(default);
+        await SetValue(default);
         await gridInstance.Reload();
     }
 
-    public async Task Reload()
+    async Task ReloadGrid()
     {
         await ViewModel.Load(true);
         await SetValue(default);

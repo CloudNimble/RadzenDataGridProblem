@@ -1,4 +1,4 @@
-using CloudNimble.EasyAF.Core;
+using RadzenGridProblem.Client.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,7 +8,7 @@ namespace RadzenGridProblem.Core
     /// <summary>
     /// 
     /// </summary>
-    public partial class Company : DbObservableObject, IIdentifiable<Guid>, ICreatedAuditable, ICreatorTrackable<Guid>, IUpdatedAuditable, IUpdaterTrackable<Guid>
+    public partial class Company : IIdentifiable<Guid>
     {
     
         #region Private Members
@@ -36,150 +36,89 @@ namespace RadzenGridProblem.Core
         /// <summary>
         /// 
         /// </summary>
-        public Guid Id
-        {
-            get => _id;
-            set => Set(() => Id, ref _id, value);
-        }
+        public Guid Id { get; set; } 
         
         /// <summary>
         /// 
         /// </summary>
-        public Nullable<long> CrunchbaseId
-        {
-            get => _crunchbaseId;
-            set => Set(() => CrunchbaseId, ref _crunchbaseId, value);
-        }
-        
+        public Nullable<long> CrunchbaseId { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(30)]
-        public string PartnerId
-        {
-            get => _partnerId;
-            set => Set(() => PartnerId, ref _partnerId, value);
-        }
-        
+        public string PartnerId { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public Nullable<Guid> PartnerContactId
-        {
-            get => _partnerContactId;
-            set => Set(() => PartnerContactId, ref _partnerContactId, value);
-        }
-        
+        public Nullable<Guid> PartnerContactId { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(50)]
-        public string CompanyName
-        {
-            get => _companyName;
-            set => Set(() => CompanyName, ref _companyName, value);
-        }
-        
+        public string CompanyName { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(50)]
-        public string CorporationName
-        {
-            get => _corporationName;
-            set => Set(() => CorporationName, ref _corporationName, value);
-        }
-        
+        public string CorporationName { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(50)]
-        public string City
-        {
-            get => _city;
-            set => Set(() => City, ref _city, value);
-        }
-        
+        public string City { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(25)]
-        public string State
-        {
-            get => _state;
-            set => Set(() => State, ref _state, value);
-        }
-        
+        public string State { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(10)]
-        public string Country
-        {
-            get => _country;
-            set => Set(() => Country, ref _country, value);
-        }
-        
+        public string Country { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [StringLength(100)]
-        public string LogoUrl
-        {
-            get => _logoUrl;
-            set => Set(() => LogoUrl, ref _logoUrl, value);
-        }
-        
+        public string LogoUrl { get; set; }
         /// <summary>
         /// 
         /// </summary>
         [StringLength(7)]
-        public string GraphColor
-        {
-            get => _graphColor;
-            set => Set(() => GraphColor, ref _graphColor, value);
-        }
-        
+        public string GraphColor { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public Guid CreatedById
-        {
-            get => _createdById;
-            set => Set(() => CreatedById, ref _createdById, value);
-        }
-        
+        public Guid CreatedById { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public DateTimeOffset DateCreated
-        {
-            get => _dateCreated;
-            set => Set(() => DateCreated, ref _dateCreated, value);
-        }
-        
+        public DateTimeOffset DateCreated { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public Nullable<Guid> UpdatedById
-        {
-            get => _updatedById;
-            set => Set(() => UpdatedById, ref _updatedById, value);
-        }
-        
+        public Nullable<Guid> UpdatedById { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public Nullable<DateTimeOffset> DateUpdated
-        {
-            get => _dateUpdated;
-            set => Set(() => DateUpdated, ref _dateUpdated, value);
-        }
-        
+        public Nullable<DateTimeOffset> DateUpdated { get; set; }
+
         #endregion
-        
+
         #region Constructors
-        
+
         /// <summary>
         /// 
         /// </summary>

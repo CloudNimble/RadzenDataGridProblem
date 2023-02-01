@@ -54,7 +54,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        viewModel.StateHasChanged.Action = StateHasChanged;
+        viewModel.StateHasChangedAction = StateHasChanged;
         viewModel.Entities.AddRange(new List<Company>()
         {
             new Company("Test 1", "Test 1, Inc.", "San Francisco", "CA", "USA"),
@@ -65,12 +65,6 @@
             new Company("Test 6", "Test 1, Inc.", "San Francisco", "CA", "USA"),
         });
         await viewModel.Load();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender) return;
-        await gridInstance.Refresh();
     }
 
 }

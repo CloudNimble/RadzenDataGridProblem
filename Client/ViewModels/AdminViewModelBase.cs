@@ -1,6 +1,4 @@
 ﻿using CloudNimble.BlazorEssentials;
-using CloudNimble.EasyAF.Configuration;
-using CloudNimble.EasyAF.Core;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using RadzenGridProblem.Client.Models;
@@ -17,7 +15,7 @@ namespace RadzenGridProblem.Client.ViewModels
     /// <summary>
     /// Base class for all view models in the admin tool.
     /// </summary>
-    public class AdminViewModelBase<T> : ViewModelBase<ConfigurationBase, AdminAppState> where T : DbObservableObject, IIdentifiable<Guid>
+    public class AdminViewModelBase<T> : ViewModelBase<ConfigurationBase, AdminAppState> where T : IIdentifiable<Guid>
     {
 
         #region Private Members
@@ -83,7 +81,7 @@ namespace RadzenGridProblem.Client.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(LoadingStatus):
-                    StateHasChanged.Action();
+                    StateHasChangedAction();
                     break;
             }
         }
@@ -124,9 +122,6 @@ namespace RadzenGridProblem.Client.ViewModels
         /// <param name="entity"></param>
         public virtual async Task Save(T entity)
         {
-            ArgumentNullException.ThrowIfNull(entity);
-            entity.ClearRelationships();
-
             var notification = new NotificationMessage
             {
                 Duration = 4000
@@ -140,7 +135,7 @@ namespace RadzenGridProblem.Client.ViewModels
 
             await Load(true).ConfigureAwait(false);
 
-            StateHasChanged.Action();
+            StateHasChangedAction();
 
         }
 
@@ -163,7 +158,7 @@ namespace RadzenGridProblem.Client.ViewModels
             notification.Summary = $"{nameof(T)} {entity.Id} was deleted.";
             NotificationService.Notify(notification);
 
-            StateHasChanged.Action();
+            StateHasChangedAction();
             return true;
         }
 

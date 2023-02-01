@@ -1,5 +1,4 @@
-using CloudNimble.EasyAF.Configuration;
-using Microsoft.AspNetCore.Components.Web;
+using CloudNimble.BlazorEssentials;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Radzen;
@@ -9,7 +8,7 @@ using RadzenGridProblem.Client.ViewModels;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#kt_app_body");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+//builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.AddBlazorEssentials<ConfigurationBase, AdminAppState>("Admin");
 builder.Services.AddSingleton<IndexViewModel>();
