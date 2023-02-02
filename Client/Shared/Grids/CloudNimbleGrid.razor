@@ -1,21 +1,27 @@
 ﻿@typeparam TItem
 
 <GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
-<RadzenDataGrid @ref="gridInstance" 
-            AllowFiltering="true" 
-            AllowPaging="true" 
-            PageSize="@ViewModel.PageSize" 
-            AllowSorting="true" 
-            EditMode="DataGridEditMode.Single"
-            Data="@ViewModel.Entities" 
-            TItem="TItem" 
-            Value="@Value" 
-            RowUpdate="@OnCreateOrUpdateRow" 
-            RowCreate="@OnCreateOrUpdateRow"
-            RowSelect="@(async item => await SetValue(item))"
-            RowDoubleClick="@(args => EditRow(args.Data))"
-            EmptyText="@(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")" 
-            Responsive="true" Style="height: calc(100vh - 260px); overflow-y: scroll;">
+<RadzenDataGrid @ref="gridInstance"
+                AllowFiltering="true"
+                AllowPaging="true"
+                AllowSorting="true"
+
+                Data="@ViewModel.Entities"
+                EditMode="DataGridEditMode.Single"
+                
+                TItem="TItem"
+
+                Value="@Value"
+                RowUpdate="@OnCreateOrUpdateRow"
+                RowCreate="@OnCreateOrUpdateRow"
+                PageSize="@ViewModel.PageSize"
+                RowSelect="@(async item => await SetValue(item))"
+                RowDoubleClick="@(args => EditRow(args.Data))"
+
+                Responsive="true"
+                Style="height: calc(100vh - 260px); overflow-y: scroll;"
+
+                EmptyText="@(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")">
     <Columns>
 
         @Columns
