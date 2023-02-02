@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject AdminAppState appState
 
 <div class="container-fluid">
     @Body
@@ -8,3 +9,13 @@
 <RadzenNotification />
 <RadzenContextMenu />
 <RadzenTooltip />
+
+@code
+{
+
+    protected override async Task OnInitializedAsync()
+    {
+        appState.StateHasChanged.Action = StateHasChanged;
+    }
+
+}
