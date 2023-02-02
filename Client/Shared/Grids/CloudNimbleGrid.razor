@@ -1,7 +1,7 @@
 ﻿@typeparam TItem
 
 <GridTopRow ViewModel="@ViewModel" NewRow="@(async () => await NewRow())" />
-<RadzenGrid @ref="gridInstance" 
+<RadzenDataGrid @ref="gridInstance" 
             AllowFiltering="true" 
             AllowPaging="true" 
             PageSize="@ViewModel.PageSize" 
@@ -13,14 +13,14 @@
             RowUpdate="@OnCreateOrUpdateRow" 
             RowCreate="@OnCreateOrUpdateRow"
             RowSelect="@(async item => await SetValue(item))"
-            RowDoubleClick="@(item => EditRow(item))"
+            RowDoubleClick="@(args => EditRow(args.Data))"
             EmptyText="@(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")" 
             Responsive="true" Style="height: calc(100vh - 260px); overflow-y: scroll;">
     <Columns>
 
         @Columns
 
-        <RadzenGridColumn TItem="TItem" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
+        <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
             <Template Context="context">
                 <button class="btn btn-primary" @onclick="@(() => EditRow(context))"><iconify-icon data-icon="fa-regular:edit" data-height="16" style="color: #FFF;"></iconify-icon></button>
             </Template>
@@ -28,15 +28,15 @@
                 <button class="btn btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><iconify-icon data-icon="fa-regular:save" data-height="16" style="color: #FFF;"></iconify-icon></button>
                 <button class="btn btn-danger" @onclick="@(async () => await CancelEdit(context))"><iconify-icon data-icon="fa-regular:window-close" data-height="16" style="color: #FFF;"></iconify-icon></button>
             </EditTemplate>
-        </RadzenGridColumn>
+        </RadzenDataGridColumn>
 
-        <RadzenGridColumn TItem="TItem" Bubble="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
+        <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
             <Template Context="context">
                 <button class="btn btn-danger" @onclick="@(() => DeleteRow(context))"><iconify-icon data-icon="fa-regular:trash-alt" data-height="16" style="color: #FFF;"></iconify-icon></button>
             </Template>
-        </RadzenGridColumn>
+        </RadzenDataGridColumn>
     </Columns>
-</RadzenGrid>
+</RadzenDataGrid>
 @if (ShowFooter)
 {
     <GridBottomRow ViewModel="@ViewModel" Load="@ReloadGrid" />
@@ -51,19 +51,19 @@
     public AdminViewModelBase<TItem> ViewModel { get; set; }
 
     [Parameter]
-    public TItem Value { get; set; }
+    public List<TItem> Value { get; set; }
 
     [Parameter]
-    public EventCallback<TItem> ValueChanged { get; set; }
+    public EventCallback<List<TItem>> ValueChanged { get; set; }
 
     [Parameter]
     public bool ShowFooter { get; set; } = true;
 
-    private RadzenGrid<TItem> gridInstance;
+    private RadzenDataGrid<TItem> gridInstance;
 
     async Task SetValue(TItem value)
     {
-        Value = value;
+        Value = new List<TItem>() { value };
         await ValueChanged.InvokeAsync(Value);
     }
 

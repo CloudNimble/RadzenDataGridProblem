@@ -1,4 +1,5 @@
 ﻿using CloudNimble.BlazorEssentials;
+using CloudNimble.EasyAF.Configuration;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using RadzenGridProblem.Client.Models;
@@ -81,7 +82,7 @@ namespace RadzenGridProblem.Client.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(LoadingStatus):
-                    StateHasChangedAction();
+                    StateHasChanged.Action();
                     break;
             }
         }
@@ -135,7 +136,7 @@ namespace RadzenGridProblem.Client.ViewModels
 
             await Load(true).ConfigureAwait(false);
 
-            StateHasChangedAction();
+            StateHasChanged.Action();
 
         }
 
@@ -158,7 +159,7 @@ namespace RadzenGridProblem.Client.ViewModels
             notification.Summary = $"{nameof(T)} {entity.Id} was deleted.";
             NotificationService.Notify(notification);
 
-            StateHasChangedAction();
+            StateHasChanged.Action();
             return true;
         }
 

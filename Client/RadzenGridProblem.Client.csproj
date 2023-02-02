@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BlazorEssentials" Version="2.0.0-CI-20210904-054213" />
+		<PackageReference Include="BlazorEssentials" Version="2.*-*" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.*" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.*" />

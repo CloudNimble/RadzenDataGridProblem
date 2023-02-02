@@ -1,10 +1,10 @@
 ﻿using CloudNimble.BlazorEssentials;
 using CloudNimble.BlazorEssentials.Navigation;
+using CloudNimble.EasyAF.Configuration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -41,7 +41,7 @@ namespace RadzenGridProblem.Client.Models
         /// <param name="config"></param>
         /// <param name="oDataClient"></param>
         public AdminAppState(NavigationManager navigationManager, IHttpClientFactory httpClientFactory, IJSRuntime jsRuntime, IWebAssemblyHostEnvironment hostEnvironment, ConfigurationBase config)
-            : base(navigationManager, httpClientFactory)
+            : base(navigationManager, httpClientFactory, jsRuntime, hostEnvironment)
         {
             this.config = config;
             var nav = new List<NavigationItem>

@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 using CloudNimble.BlazorEssentials;
+using CloudNimble.EasyAF.Configuration;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 using RadzenGridProblem.Client.Models;
