@@ -28,17 +28,17 @@
 
         <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="116px">
             <Template Context="context">
-                <button class="btn btn-primary" @onclick="@(() => EditRow(context))"><iconify-icon data-icon="fa-regular:edit" data-height="16" style="color: #FFF;"></iconify-icon></button>
+                <button class="btn btn-sm btn-primary" @onclick="@(() => EditRow(context))"><i class="far fa-edit" /></button>
             </Template>
             <EditTemplate Context="context">
-                <button class="btn btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><iconify-icon data-icon="fa-regular:save" data-height="16" style="color: #FFF;"></iconify-icon></button>
-                <button class="btn btn-danger" @onclick="@(async () => await CancelEdit(context))"><iconify-icon data-icon="fa-regular:window-close" data-height="16" style="color: #FFF;"></iconify-icon></button>
+                <button class="btn btn-sm btn-success mr-1" @onclick="@(async () => await UpdateRow(context))"><i class="far fa-save" /></button>
+                <button class="btn btn-sm btn-danger" @onclick="@(async () => await CancelEdit(context))"><i class="far fa-window-close" /></button>
             </EditTemplate>
         </RadzenDataGridColumn>
 
         <RadzenDataGridColumn TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="60px">
             <Template Context="context">
-                <button class="btn btn-danger" @onclick="@(() => DeleteRow(context))"><iconify-icon data-icon="fa-regular:trash-alt" data-height="16" style="color: #FFF;"></iconify-icon></button>
+                <button class="btn btn-sm btn-danger" @onclick="@(() => DeleteRow(context))"><i class="far fa-trash-alt" /></button>
             </Template>
         </RadzenDataGridColumn>
     </Columns>
