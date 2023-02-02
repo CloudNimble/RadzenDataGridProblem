@@ -44,12 +44,6 @@ namespace RadzenGridProblem.Client.Models
         public AdminAppState(NavigationManager navigationManager, IHttpClientFactory httpClientFactory, IJSRuntime jsRuntime, IWebAssemblyHostEnvironment hostEnvironment, ConfigurationBase config)
             : base(navigationManager, httpClientFactory, jsRuntime, hostEnvironment)
         {
-            if (!Environment.IsProduction())
-            {
-                StateHasChanged.DebugMode = StateHasChangedDebugMode.Info;
-            }
-            StateHasChanged.DelayMode = StateHasChangedDelayMode.Throttle;
-            StateHasChanged.DelayInterval = 50;
             this.config = config;
             var nav = new List<NavigationItem>
             {
@@ -57,24 +51,24 @@ namespace RadzenGridProblem.Client.Models
             };
             LoadNavItems(nav);
 
-            this.PropertyChanged += AdminAppState_PropertyChanged;
+            //this.PropertyChanged += AdminAppState_PropertyChanged;
         }
 
         #endregion
 
         #region Event Handlers
 
-        private void AdminAppState_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(ClaimsPrincipal):
-                    if (ClaimsPrincipal is null) return;
-                    _ = Load();
-                    break;
-            }
-            StateHasChanged.Action();
-        }
+        //private void AdminAppState_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    switch (e.PropertyName)
+        //    {
+        //        case nameof(ClaimsPrincipal):
+        //            if (ClaimsPrincipal is null) return;
+        //            _ = Load();
+        //            break;
+        //    }
+        //    StateHasChanged.Action();
+        //}
 
         #endregion
 

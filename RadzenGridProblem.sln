@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadzenGridProblem.Client", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadzenGridProblem.Shared", "Shared\RadzenGridProblem.Shared.csproj", "{92142779-72CA-4F21-858B-746B059FB638}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4626C5F7-809B-4550-9385-205E693FA534}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA894818-18D8-4D97-AFC6-8A2CC9959EF1}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
