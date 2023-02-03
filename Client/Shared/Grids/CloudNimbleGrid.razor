@@ -5,22 +5,21 @@
                 AllowFiltering="true"
                 AllowPaging="true"
                 AllowSorting="true"
-
+                Count="@ViewModel.ResultCount"
                 Data="@ViewModel.Entities"
                 EditMode="DataGridEditMode.Single"
-                
+                IsLoading="ViewModel.LoadingStatus == LoadingStatus.Loading"
                 TItem="TItem"
-
+                SelectionMode="DataGridSelectionMode.Single"
                 Value="@Value"
                 RowUpdate="@OnCreateOrUpdateRow"
                 RowCreate="@OnCreateOrUpdateRow"
                 PageSize="@ViewModel.PageSize"
                 RowSelect="@(async item => await SetValue(item))"
                 RowDoubleClick="@(args => EditRow(args.Data))"
-
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                 Responsive="true"
                 Style="height: calc(100vh - 260px); overflow-y: scroll;"
-
                 EmptyText="@(ViewModel.LoadingStatus == LoadingStatus.Loading ? "Loading..." : "The BurnRate API returned no results.")">
     <Columns>
 
@@ -80,10 +79,10 @@
         await SetValue(item);
     }
 
-    void EditRow(TItem entity)
+    async Task EditRow(TItem entity)
     {
         //Value = entity;
-        gridInstance.EditRow(entity);
+        await gridInstance.EditRow(entity);
     }
 
     async Task UpdateRow(TItem entity)

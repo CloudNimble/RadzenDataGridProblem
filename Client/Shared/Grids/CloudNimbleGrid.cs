@@ -1,4 +1,4 @@
-﻿using RadzenGridProblem.Client.Models;
+﻿using CloudNimble.EasyAF.Core;
 using System;
 
 namespace RadzenGridProblem.Client.Shared.Grids
